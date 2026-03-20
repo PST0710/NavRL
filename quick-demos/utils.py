@@ -1,7 +1,10 @@
 import torch
 import torch.nn as nn
 from typing import Iterable, Union
-from tensordict.tensordict import TensorDict
+try:
+    from tensordict.tensordict import TensorDict
+except ModuleNotFoundError:
+    from tensordict import TensorDict
 import numpy as np
 
 class ValueNorm(nn.Module):

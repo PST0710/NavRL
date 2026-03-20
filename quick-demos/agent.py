@@ -1,7 +1,20 @@
 import torch
 import os
-from torchrl.data import CompositeSpec, UnboundedContinuousTensorSpec
-from tensordict.tensordict import TensorDict
+try:
+    from torchrl.data import CompositeSpec, UnboundedContinuousTensorSpec
+except ImportError:
+    try:
+        from torchrl.data.tensor_specs import CompositeSpec, UnboundedContinuousTensorSpec
+    except ImportError:
+        from torchrl.data import Composite, Unbounded
+
+        CompositeSpec = Composite
+        UnboundedContinuousTensorSpec = Unbounded
+
+try:
+    from tensordict.tensordict import TensorDict
+except ModuleNotFoundError:
+    from tensordict import TensorDict
 from torchrl.envs.utils import ExplorationType, set_exploration_type
 from ppo import PPO
 
